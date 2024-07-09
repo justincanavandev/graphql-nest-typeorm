@@ -2,18 +2,14 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './graphql/models/User';
+import { User } from './graphql/entities/User';
 import { UsersModule } from './users/users.module';
-import { UserSettings } from './graphql/models/UserSettings';
+import { UserSettings } from './graphql/entities/UserSettings';
 // import { UserSettings } from './graphql/models/UserSettings';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      // type: 'sqlite',
-      // database: ':memory:',
-      // entities: [User, UserSettings],
-      // synchronize: true,
       type: 'postgres',
       host: 'localhost',
       port: 5432,

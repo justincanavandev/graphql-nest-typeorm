@@ -3,9 +3,10 @@
 # ------------------------------------------------------
 
 type UserSettings {
-  userId: Int!
+  id: Int!
   receiveNotifications: Boolean!
   receiveEmails: Boolean!
+  user: User!
 }
 
 type User {
@@ -18,13 +19,16 @@ type User {
 type Query {
   getUsers: [User!]!
   getUserById(id: Int!): User!
+  getUserSettings(userId: Float!): UserSettings!
 }
 
 type Mutation {
   createUser(user: UserCreateInput!): User!
-  updateUser(user: UserCreateInput!, id: Float!): User!
+  updateUser(id: Float!, user: UserCreateInput!): User!
   deleteUser(id: Float!): User!
   createUserSettings(userSettings: UserSettingsInput!): UserSettings!
+  updateUserSettings(settingsId: Float!, userSettings: UserSettingsUpdate!): UserSettings!
+  deleteUserSettings(settingsId: Float!): UserSettings!
 }
 
 input UserCreateInput {
@@ -36,4 +40,9 @@ input UserSettingsInput {
   userId: Float!
   receiveNotifications: Boolean!
   receiveEmails: Boolean!
+}
+
+input UserSettingsUpdate {
+  receiveNotifications: Boolean! = false
+  receiveEmails: Boolean! = false
 }

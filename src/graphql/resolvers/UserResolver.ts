@@ -7,18 +7,18 @@ import {
   Resolver,
   // Parent,
 } from '@nestjs/graphql';
-import { User } from '../models/User';
-import { UserService } from 'src/users/UserService';
+import { User } from '../entities/User';
+import { UserService } from 'src/users/services/UserService';
 import { Inject } from '@nestjs/common';
-import { UserCreateInput } from 'src/users/dto/userCreateInput';
-import { UserSettingsService } from 'src/users/UserSettingService';
+import { UserCreateInput } from 'src/graphql/dto/userCreateInput';
+// import { UserSettingsService } from 'src/users/services/UserSettingService';
 // import { UserSettings } from '../models/UserSettings';
 
 @Resolver(() => User)
 export class UserResolver {
   constructor(
     @Inject(UserService) private userService: UserService,
-    private userSettingsService: UserSettingsService,
+    // private userSettingsService: UserSettingsService,
   ) {}
 
   @Query(() => [User])
@@ -37,17 +37,12 @@ export class UserResolver {
   }
 
   @Mutation(() => User)
-  updateUser(@Args('user') user: UserCreateInput, @Args('id') id: number) {
-    return this.userService.updateUser(user, id);
+  updateUser(@Args('id') id: number, @Args('user') user: UserCreateInput) {
+    return this.userService.updateUser(id, user);
   }
 
   @Mutation(() => User)
   deleteUser(@Args('id') id: number) {
     return this.userService.deleteUser(id);
   }
-
-  // @ResolveField(() => UserSettings, { name: 'settings' })
-  // getUserSettings(@Parent() user: User) {
-  //   return this.userSettingsService.createUserSettings();
-  // }
 }

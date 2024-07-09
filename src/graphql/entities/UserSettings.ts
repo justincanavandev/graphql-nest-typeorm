@@ -3,18 +3,17 @@ import {
   Entity,
   Column,
   OneToOne,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   JoinColumn,
-  // JoinColumn,
 } from 'typeorm';
 import { User } from './User';
 
-@Entity({ name: 'userSettings' })
+@Entity({ name: 'user_settings' })
 @ObjectType()
 export class UserSettings {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   @Field(() => Int)
-  userId: number;
+  id: number;
 
   @Column({ default: false })
   @Field({ defaultValue: false })
@@ -24,11 +23,8 @@ export class UserSettings {
   @Field({ defaultValue: false })
   receiveEmails: boolean;
 
-  @OneToOne(() => User, {
-    onDelete: 'CASCADE',
-  })
+  @OneToOne(() => User, (user) => user.settings)
   @JoinColumn()
-  // @Field({ nullable: true })
-  // @JoinColumn({ name: 'settingsId' })
+  @Field(() => User)
   user: User;
 }

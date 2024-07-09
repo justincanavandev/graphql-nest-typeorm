@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { UserResolver } from 'src/graphql/resolvers/UserResolver';
-import { UserService } from './UserService';
+import { UserService } from './services/UserService';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from 'src/graphql/models/User';
-import { UserSettings } from 'src/graphql/models/UserSettings';
-import { UserSettingsService } from './UserSettingService';
+import { User } from 'src/graphql/entities/User';
+import { UserSettings } from 'src/graphql/entities/UserSettings';
+import { UserSettingsService } from './services/UserSettingService';
 import { UserSettingsResolver } from 'src/graphql/resolvers/UserSettingsResolver';
 // import { UserSettings } from 'src/graphql/models/UserSettings';
 

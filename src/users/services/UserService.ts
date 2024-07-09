@@ -1,14 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/graphql/models/User';
+import { User } from 'src/graphql/entities/User';
 import { Repository } from 'typeorm';
-import { UserCreateInput } from './dto/userCreateInput';
-// import { UserSettings } from 'src/graphql/models/UserSettings';
+import { UserCreateInput } from '../../graphql/dto/userCreateInput';
+// import { UserSettings } from 'src/graphql/entities/UserSettings';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private usersRepository: Repository<User>,
+    // @InjectRepository(UserSettings)
+    // private userSettingsRepository: Repository<UserSettings>,
   ) {}
 
   async getUsers() {
@@ -27,7 +29,7 @@ export class UserService {
     return await this.usersRepository.save(newUser);
   }
 
-  async updateUser(user: UserCreateInput, id: number) {
+  async updateUser(id: number, user: UserCreateInput) {
     await this.usersRepository.update(id, user);
 
     return this.usersRepository.findOne({ where: { id } });
@@ -41,9 +43,4 @@ export class UserService {
 
     return deletedUser;
   }
-
-  // @ResolveField((returns) => UserSettings, { name: 'settings', nullable: true })
-  // getUserSettings(@Parent() user: User) {
-  //   return this.userSettingService.getUserSettingById(user.id);
-  // }
 }

@@ -4,7 +4,7 @@ import {
   Column,
   PrimaryGeneratedColumn,
   OneToOne,
-  JoinColumn,
+  // JoinColumn,
 } from 'typeorm';
 import { UserSettings } from './UserSettings';
 
@@ -23,8 +23,12 @@ export class User {
   @Field()
   email: string;
 
-  @OneToOne(() => UserSettings)
-  @JoinColumn({ name: 'settingsUserId' })
+  // The side that has the JoinColumn decorator will contain a relationId and foreign keys to target the related table
+
+  @OneToOne(() => UserSettings, (userSettings) => userSettings.user, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   @Field({ nullable: true })
   settings?: UserSettings;
 }
